@@ -5,30 +5,21 @@ plugins {
 }
 
 // http://imperceptiblethoughts.com/shadow/
+// https://github.com/vert-x3/vertx-examples/tree/master/gradle-verticles/gradle-verticle
+mainClassName = "io.vertx.core.Launcher"
 
-//jar {
-//  manifest {
-//    attributes(
-//        "Implementation-Title": name,
-//        "Implementation-Version": version,
-//        "Main-Class": "daggerok.App"
-//    )
-//  }
-//}
-//
-//assemble.dependsOn shadowJar
-mainClassName = "daggerok.App"
-
-// ./gradlew build
-// java -jar build/libs/*.jar
-
-// ./gradlew installShadowDist
-// ./gradlew startShadowScripts
-// ./build/install/reactive-microserviceson-jvm-vertx-shadow/bin/reactive-microserviceson-jvm-vertx
+shadowJar {
+  classifier = "fat"
+  manifest {
+    attributes "Main-Verticle": "daggerok.App"
+  }
+  mergeServiceFiles {
+    include "META-INF/services/io.vertx.core.spi.VerticleFactory"
+  }
+}
 
 group "daggerok"
 version "0.0.1"
-
 sourceCompatibility = targetCompatibility = 1.8
 
 repositories {

@@ -1,8 +1,8 @@
 = reactive-microservices-jvm-vertx image:https://travis-ci.org/daggerok/vertx-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/vertx-examples"]
 
 ----
-./gradlew build
-./build/install/reactive-microservices-jvm-vertx-shadow/bin/reactive-microservices-jvm-vertx
+./gradlew clean build
+java -jar build/libs/reactive-microservices-jvm-vertx-0.0.1-fat.jar
 ----
 
 resources
