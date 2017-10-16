@@ -19,6 +19,10 @@ before_install:
 script:
   - export root=$PWD
 
+  # getting-started-jvm-vertx
+  - cd $root/getting-started-jvm-vertx
+  - bash gradlew clean build
+
   # reactive-microservices-jvm-vertx
   - cd $root/reactive-microservices-jvm-vertx
   - bash gradlew clean build

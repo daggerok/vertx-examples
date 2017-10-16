@@ -1,0 +1,11 @@
+= getting-started-jvm-vertx image:https://travis-ci.org/daggerok/vertx-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/vertx-examples"]
+
+----
+./gradlew build
+./build/install/getting-started-jvm-vertx-shadow/bin/getting-started-jvm-vertx
+----
+
+resources
+
+. http://vertx.io/docs/vertx-web/java/
+. https://www.youtube.com/watch?v=MydhJVPEnzU
