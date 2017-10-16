@@ -1,4 +1,4 @@
-= reactive-microservices-jvm-vertx
+= reactive-microservices-jvm-vertx image:https://travis-ci.org/daggerok/vertx-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/vertx-examples"]
 
 ----
 ./gradlew build
