@@ -5,6 +5,7 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.Json;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+import io.vertx.ext.web.handler.StaticHandler;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 
@@ -23,9 +24,12 @@ public class App {
 
   public static void main(String[] args) {
 
-    router.route("/")
+    router.route("/static/*")
+          .handler(StaticHandler.create("static"));
+/*
+    router.route("/") // useless with static handler
           .handler(App::indexHtml);
-
+*/
     router.route("/api/v1/hello")
           .handler(App::hello);
 
