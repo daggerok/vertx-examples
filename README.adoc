@@ -1,0 +1,3 @@
+= vertx-examples
+
+. link:reactive-microservices-jvm-vertx/[reactive micro-services jvm vertx]

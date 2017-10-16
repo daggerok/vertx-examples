@@ -1,0 +1,9 @@
+.idea
+out
+build
+.gradle
+.vertx
+*.iml
+*.ipr
+*.iws
+.DS_Store

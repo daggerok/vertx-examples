@@ -1,0 +1,11 @@
+= reactive-microservices-jvm-vertx
+
+----
+./gradlew build
+./build/install/reactive-microservices-jvm-vertx-shadow/bin/reactive-microservices-jvm-vertx
+----
+
+resources
+
+. http://vertx.io/docs/vertx-web/java/
+. https://www.youtube.com/watch?v=MydhJVPEnzU

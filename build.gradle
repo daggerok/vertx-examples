@@ -1,0 +1,6 @@
+group "daggerok"
+version "0.0.1"
+
+wrapper {
+  gradleVersion = "4.2.1"
+}

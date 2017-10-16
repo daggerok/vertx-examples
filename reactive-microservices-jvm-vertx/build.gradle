@@ -1,0 +1,58 @@
+plugins {
+  id "java"
+  id "application"
+  id "com.github.johnrengelman.shadow" version "2.0.1"
+}
+
+// http://imperceptiblethoughts.com/shadow/
+
+//jar {
+//  manifest {
+//    attributes(
+//        "Implementation-Title": name,
+//        "Implementation-Version": version,
+//        "Main-Class": "daggerok.App"
+//    )
+//  }
+//}
+//
+//assemble.dependsOn shadowJar
+mainClassName = "daggerok.App"
+
+// ./gradlew build
+// java -jar build/libs/*.jar
+
+// ./gradlew installShadowDist
+// ./gradlew startShadowScripts
+// ./build/install/reactive-microserviceson-jvm-vertx-shadow/bin/reactive-microserviceson-jvm-vertx
+
+group "daggerok"
+version "0.0.1"
+
+sourceCompatibility = targetCompatibility = 1.8
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+
+  compile "io.vertx:vertx-core:3.4.2",
+      "io.vertx:vertx-web:3.4.2",
+      "org.slf4j:slf4j-log4j12:1.7.25",
+      "org.projectlombok:lombok:1.16.18"//,
+//      "io.vavr:vavr:0.9.1",
+//      "org.codehaus.groovy:groovy-all:2.4.1"
+//
+//  //testCompile "junit:junit:4.12"
+//  testCompileOnly "org.projectlombok:lombok:1.16.18"
+//
+//  // spock
+//  testCompile "org.spockframework:spock-core:1.1-groovy-2.4",
+//      "org.spockframework:spock-spring:1.1-groovy-2.4",
+//      "cglib:cglib-nodep:3.2.2"
+}
+
+wrapper {
+  gradleVersion = "4.2.1"
+}
