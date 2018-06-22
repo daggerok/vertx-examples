@@ -1,36 +1,40 @@
-group: edge
-dist: trusty
+service:
+- docker
 
 language: java
 jdk: oraclejdk8
 
+addons:
+  apt:
+    update: true
+    packages:
+    - docker-ce
+    - python-pip
+    - curl
+    - bash
+    - jq
+
 install: true
 before_install:
-  - sudo apt update
-
-  # docker-compose
-  - sudo apt install -y python-pip curl jq
-  - sudo pip install docker-compose httpie
-  - sudo usermod -aG docker $(whoami)
-
-  # kill whatever punning on pg port
-  - true | sudo kill $(sudo lsof -t -i:5432)
+- sudo pip install docker-compose httpie
+- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+- stop_any 5432
 
 script:
-  - export root=$PWD
+- export root=$PWD
+# getting-started-jvm-vertx
+- cd $root/getting-started-jvm-vertx
+- ./gradlew clean build
+# reactive-microservices-jvm-vertx
+- cd $root/reactive-microservices-jvm-vertx
+- ./gradlew clean build
 
-  # getting-started-jvm-vertx
-  - cd $root/getting-started-jvm-vertx
-  - bash gradlew clean build
-
-  # reactive-microservices-jvm-vertx
-  - cd $root/reactive-microservices-jvm-vertx
-  - bash gradlew clean build
-
-after_script:
-  - bash gradlew --stop
+before_cache:
+- sudo rm -rf $HOME/.gradle/caches/*/fileHashes/fileHashes.bin
+- sudo rm -rf $HOME/.gradle/caches/*/fileHashes/fileHashes.lock
+- sudo rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
 
 cache:
   directories:
-    - $HOME/.m2/
-    - $HOME/.gradle
+  - $HOME/.m2/
+  - $HOME/.gradle
