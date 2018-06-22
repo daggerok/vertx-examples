@@ -1,5 +1,5 @@
 = vertx-examples image:https://travis-ci.org/daggerok/vertx-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/vertx-examples"]
 
-. link:http://escoffier.me/vertx-hol/[from zero to micro hero]
+. link:http://escoffier.me/vertx-hol/[TODO: from zero to micro hero]
 . link:getting-started-jvm-vertx/[getting-started]
 . link:reactive-microservices-jvm-vertx/[reactive micro-services jvm vertx]
