@@ -1,1 +1,2 @@
-rootProject.name = "vertx-examples"
+rootProject.name = 'vertx-examples'
+include 'docs'

@@ -1,6 +1,31 @@
-group "daggerok"
-version "0.0.1"
+buildscript {
+  ext {
+    asciidoctorjPdfVersion = '1.5.0-alpha.15'
+  }
+  dependencies {
+    classpath "org.asciidoctor:asciidoctorj-pdf:$asciidoctorjPdfVersion"
+  }
+}
+
+plugins {
+  id 'org.asciidoctor.convert' version '1.5.7' apply false
+  id 'org.ajoberstar.git-publish' version '0.3.0' apply false
+}
+
+allprojects {
+  group 'daggerok'
+  version '0.0.1'
+
+  apply plugin: 'base'
+
+  defaultTasks 'clean', 'documentation'
+
+  clean {
+    delete "$rootDir/target/generated-docs"
+  }
+}
 
 wrapper {
-  gradleVersion = "4.2.1"
+  gradleVersion = '4.8'
 }
+

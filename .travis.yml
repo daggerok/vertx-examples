@@ -29,6 +29,23 @@ script:
 - cd $root/reactive-microservices-jvm-vertx
 - ./gradlew clean build
 
+before_deploy: ./mvnw
+
+env:
+  global:
+    secure: zN4w+Wet1Qi1zAlxjFz1plxPlm5R2kcRIfYdbb5Ao5XaST8F6MufsxPDZsCB6LJN6srSeg469TVP0QBfiB9ZYyoqd80rdDXoNMKeSVrhEsrRGs9JfJh97RlY8tesx1t60OuI9mTg+PDZFFVQz8BmK6zOgEhyO3/WNLKk9gTVAn0i34Ogv71GbXQEu7IfSu7XqxxSzRBMD/ldrUlkbyo/tMmv5wwsd1bovk2u65hWZFXlu0b8EsDwk62AvGIaWAyB0v5oBvm8zDXivZjEwRKVqC3LwPjC6JwXUfHY83W4kOSb3KXayDpAxpLUgI8jBu9pm9kHZWOwz5890mYaBJZaKyAu51Gdn094kE++RFOtgioCF7dVAB+zcm4Oak1sMp8h2NkGq91qXDDDGP7x/p3OtQZvYfggeEtFUOhrW127Lbu7K7kUFaZ9RfdiMzBOCZQYhKzJassXInZ8qL5dWLs0a8q4ib6XzSmXG0LCPpTcMrOC3XMEOMt2TQQMz/DqFy6ieEgKY9EJSOXqs36ILSPdqlqBwNJNxWTg10766QIik5jzBRh2vi6UXywkQ+O12oo8q45EHWpjTOOUsdVjkHnixWEN+TAes7nuSCfrxR6Ln7j75m2jwrW5NemVMUo3Z47ax8x2l/B6zjm7dzWZYWU162WqSS2YyxjbSHPd4jAgboo=
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  # travis encrypt GITHUB_TOKEN=<your github repo token> --add
+  github-token: "$GITHUB_TOKEN"
+  keep-history: true
+  on:
+    branch: master
+  local-dir: ./target/generated-docs
+  target_branch: gh-pages
+
 before_cache:
 - sudo rm -rf $HOME/.gradle/caches/*/fileHashes/fileHashes.bin
 - sudo rm -rf $HOME/.gradle/caches/*/fileHashes/fileHashes.lock
