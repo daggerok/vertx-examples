@@ -2,6 +2,8 @@
 
 //tag::content[]
 
+link:https://daggerok.github.io/vertx-examples[Project reference documentation]
+
 - link:http://escoffier.me/vertx-hol/[TODO: from zero to micro hero]
 
 //end::content[]
