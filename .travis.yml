@@ -53,5 +53,6 @@ before_cache:
 
 cache:
   directories:
+  - $HOME/.docker/
+  - $HOME/.gradle/
   - $HOME/.m2/
-  - $HOME/.gradle
