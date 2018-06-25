@@ -1,2 +1,3 @@
 rootProject.name = 'vertx-examples'
+enableFeaturePreview 'STABLE_PUBLISHING'
 include 'docs'
