@@ -18,13 +18,23 @@ install: true
 before_install:
 - sudo pip install docker-compose httpie
 - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
-- stop_any 5432
+- stop_any 5432 80
 
 script:
 - export root=$PWD
+
+# generator-jvm-java-vertx
+- cd $root/generator-jvm-java-vertx
+- ./mvnw
+- java -jar target/*-all.jar
+- wait_for 8080
+- http :8080/type/he/anything/you/want
+- stop_any 8080
+
 # getting-started-jvm-vertx
 - cd $root/getting-started-jvm-vertx
 - ./gradlew clean build
+
 # reactive-microservices-jvm-vertx
 - cd $root/reactive-microservices-jvm-vertx
 - ./gradlew clean build
