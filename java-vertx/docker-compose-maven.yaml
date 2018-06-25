@@ -1,0 +1,25 @@
+version: "2.1"
+
+services:
+
+  maven-java-vertx-app:
+    build:
+      context: .
+      dockerfile: .mvn/Dockerfile
+    volumes: ["maven-java-vertx-app-data:/home/appuser"]
+    ports: ["8080:8080"]
+    restart: unless-stopped
+    # container limit: 200Mb (200 * 1024 * 1024)
+    mem_limit: 209715200
+    networks:
+      public-net:
+        aliases:
+        - app
+
+volumes:
+  maven-java-vertx-app-data: {}
+
+networks:
+  public-net:
+    driver: bridge
+

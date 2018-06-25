@@ -1,0 +1,106 @@
+service:
+- docker
+
+env:
+  global:
+  - TERM=dumb
+
+language: java
+jdk: oraclejdk8
+
+addons:
+  apt:
+    update: true
+    packages:
+    - bash
+    - unzip
+    - curl
+    - jq
+    - libxml2-utils
+    - docker-ce
+    - python-pip
+
+install: true
+before_script:
+- sudo pip install docker-compose httpie >/dev/null 2>&1
+- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+
+script:
+- bash gradlew >/dev/null
+- java -jar ./build/libs/*-all.jar &
+- wait_for 8080
+- http :8080/
+- http :8080/api/
+- http :8080/api/max
+- http :8080/api/\?name=maksimko
+- stop_any 8080
+#
+- bash gradlew clean installDist >/dev/null
+- bash ./build/install/kotlin-vertx/bin/kotlin-vertx &
+- wait_for 8080
+- http :8080/
+- http :8080/api/
+- http :8080/api/max
+- http :8080/api/\?name=maksimko
+- stop_any 8080
+#
+- bash gradlew clean distZip >/dev/null
+- unzip -o ./build/distributions/kotlin-vertx-0.0.1.zip -d /tmp
+- bash /tmp/kotlin-vertx-0.0.1/bin/kotlin-vertx &
+- wait_for 8080
+- http :8080/
+- http :8080/api/
+- http :8080/api/max
+- http :8080/api/\?name=maksimko
+- stop_any 8080
+#
+- bash gradlew clean build composeUp
+- wait_for 8080
+- http :8080/
+- http :8080/api/
+- http :8080/api/max
+- http :8080/api/\?name=maksimko
+- stop_any 8080
+- bash gradlew composeDown
+#
+- bash mvnw clean package >/dev/null
+- java -jar target/*-all.jar &
+- wait_for 8080
+- http :8080/
+- http :8080/api/
+- http :8080/api/max
+- http :8080/api/\?name=maksimko
+- stop_any 8080
+#
+- bash mvnw com.dkanejs.maven.plugins:docker-compose-maven-plugin:1.0.1:up -P docker
+- wait_for 8080
+- sleep 10
+- http :8080/
+- http :8080/api/
+- http :8080/api/max
+- http :8080/api/\?name=maksimko
+- stop_any 8080
+- bash mvnw com.dkanejs.maven.plugins:docker-compose-maven-plugin:1.0.1:down -P docker
+
+before_deploy: ./gradlew documentation
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  # travis encrypt GITHUB_TOKEN=<your github repo token> --add
+  github-token: "$GITHUB_TOKEN"
+  keep-history: true
+  on:
+    branch: master
+  local-dir: target/generated-docs
+  target_branch: gh-pages
+
+before_cache:
+- sudo rm -rf $HOME/.gradle/caches/4.8/fileHashes/fileHashes.bin
+- sudo rm -rf $HOME/.gradle/caches/4.8/fileHashes/fileHashes.lock
+- sudo rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
+
+cache:
+  directories:
+  - $HOME/.m2
+  - $HOME/.gradle
