@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?asciidoc-toc maxdepth="4"?>
+<?asciidoc-numbered?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<info>
+<title>{root-project-name} ({project-version})</title>
+<date>2018-06-25 06:19:04 UTC</date>
+<author>
+<personname>
+<firstname>Maksim</firstname>
+<surname>Kostromin</surname>
+</personname>
+<email>daggerok@gmail.com</email>
+</author>
+<authorinitials>MK</authorinitials>
+<revhistory>
+<revision>
+<revnumber>{project-version}</revnumber>
+<date>2018-06-25 06:19:04 UTC</date>
+<authorinitials>MK</authorinitials>
+</revision>
+</revhistory>
+</info>
+<preface>
+<title></title>
+<simpara>Travis CI status:
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="https://travis-ci.org/daggerok/{root-project-name}.svg?branch=master"/>
+</imageobject>
+<textobject><phrase>Build Status</phrase></textobject>
+</inlinemediaobject></simpara>
+</preface>
+<chapter xml:id="_introduction">
+<title>Introduction</title>
+<simpara>Unresolved directive in index.adoc - include::../../README.adoc[tags=content]</simpara>
+</chapter>
+<chapter xml:id="_implementation">
+<title>Implementation</title>
+<simpara>TODO: implement documentation&#8230;&#8203;</simpara>
+</chapter>
+<chapter xml:id="_links">
+<title>Links</title>
+<itemizedlist>
+<listitem>
+<simpara><link xl:href="{github-url}">GitHub repo</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://daggerok.github.io/{root-project-name}">GitHub pages</link></simpara>
+</listitem>
+</itemizedlist>
+</chapter>
+</book>
