@@ -58,6 +58,7 @@ script:
 - wait_for 8080
 - http :8080/type/he/anything/you/want
 - stop_any 8080
+- ./gradlew
 
 # getting-started-jvm-vertx
 - cd $root/getting-started-jvm-vertx
