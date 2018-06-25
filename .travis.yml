@@ -29,7 +29,9 @@ script:
 - cd $root/reactive-microservices-jvm-vertx
 - ./gradlew clean build
 
-before_deploy: ./mvnw
+before_deploy:
+- cd $root/
+- ./mvnw
 
 env:
   global:
