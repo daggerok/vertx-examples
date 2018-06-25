@@ -25,13 +25,13 @@ script:
 
 # java-vertx
 - cd $root/kotlin-vertx
-- ./mvnw
+- ./mvnw >/dev/null
 - java -jar target/*-all.jar &
 - wait_for 8080
 - http :8080/type/he/anything/you/want
 - stop_any 8080
 #
-- ./gradlew
+- ./gradlew >/dev/null
 - java -jar build/libs/*-all.jar &
 - wait_for 8080
 - http :8080/type/he/anything/you/want
