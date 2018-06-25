@@ -26,7 +26,7 @@ script:
 # generator-jvm-java-vertx
 - cd $root/generator-jvm-java-vertx
 - ./mvnw
-- java -jar target/*-all.jar
+- java -jar target/*-all.jar &
 - wait_for 8080
 - http :8080/type/he/anything/you/want
 - stop_any 8080
