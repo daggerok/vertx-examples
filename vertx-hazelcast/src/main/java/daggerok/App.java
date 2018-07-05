@@ -17,7 +17,7 @@ public class App {
   static final String ADDR = "127.0.0.1";
   static final ObjectMapper mapper = new ObjectMapper();
   static final String PORT = System.getenv().getOrDefault("PORT", "8080");
-  static int port = Integer.valueOf(PORT);
+  static final int port = Integer.valueOf(PORT);
 
   public static void main(String[] args) {
     final HazelcastClusterManager clusterManager = new HazelcastClusterManager();
