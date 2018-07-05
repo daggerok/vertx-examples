@@ -1,0 +1,24 @@
+version: '2.1'
+
+services:
+
+  maven-vertx-hazelcast-app:
+    build:
+      context: .
+      dockerfile: .mvn/Dockerfile
+    volumes: ['maven-vertx-hazelcast-app-data:/home/appuser']
+    ports: ['8080:8080']
+    restart: unless-stopped
+    # container limit: 200Mb (200 * 1024 * 1024)
+    mem_limit: 209715200
+    networks:
+      public-network:
+        aliases:
+        - app
+
+volumes:
+  maven-vertx-hazelcast-app-data:
+
+networks:
+  public-network:
+    driver: bridge

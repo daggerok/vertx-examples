@@ -1,0 +1,3 @@
+rootProject.name = 'vertx-hazelcast'
+enableFeaturePreview 'STABLE_PUBLISHING'
+include 'docs'

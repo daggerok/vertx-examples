@@ -10,6 +10,7 @@ link:https://daggerok.github.io/vertx-examples[Project reference documentation]
 
 projects:
 
+- link:vertx-hazelcast/[Vert.x | Hazelcast]
 - link:kotlin-vertx/[koltin Vert.x prject from yo generator-jvm example]
 - link:java-vertx/[java Vert.x prject from yo generator-jvm example]
 - link:generator-jvm-java-vertx/[java vertx hello world example]

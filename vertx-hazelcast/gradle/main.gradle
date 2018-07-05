@@ -1,0 +1,11 @@
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+mainClassName = 'daggerok.App'
+shadowJar.mustRunAfter jar
+defaultTasks 'clean', 'build', 'installDist', 'distZip', 'publish'
+
+dependencies {
+  implementation "io.vertx:vertx-core:$vertxVersion"
+  implementation "io.vertx:vertx-hazelcast:$vertxVersion"
+}

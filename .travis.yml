@@ -23,6 +23,29 @@ before_install:
 script:
 - export root=$(pwd)
 
+# vertx-hazelcast
+- cd $root/vertx-hazelcast
+#
+- bash gradlew clean installDist >/dev/null
+- bash ./build/install/vertx-hazelcast/bin/vertx-hazelcast &
+- PORT=8081 bash ./build/install/vertx-hazelcast/bin/vertx-hazelcast &
+- wait_for 8080 8081
+- http :8080 message=ololo >/dev/null
+- http :8080 message=trololo >/dev/null
+- http :8081 message=ololo >/dev/null
+- http :8081 message=trololo >/dev/null
+- stop_any 8080 8081
+#
+- bash mvnw clean package >/dev/null
+- java -jar target/*-all.jar &
+- PORT=8081 java -jar target/*-all.jar &
+- wait_for 8080 8081
+- http :8080 message=ololo8080 >/dev/null
+- http :8080 message=trololo8080 >/dev/null
+- http :8081 message=ololo8081 >/dev/null
+- http :8081 message=trololo8081 >/dev/null
+- stop_any 8080 8081
+
 # java-vertx
 - cd $root/kotlin-vertx
 - ./mvnw >/dev/null
