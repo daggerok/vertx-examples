@@ -10,6 +10,7 @@ link:https://daggerok.github.io/vertx-examples[Project reference documentation]
 
 projects:
 
+- link:https://github.com/daggerok/vertx-cdi-view[GitHub: daggerok/vertx-cdi-view]
 - link:vertx-hazelcast/[Vert.x | Hazelcast]
 - link:kotlin-vertx/[koltin Vert.x prject from yo generator-jvm example]
 - link:java-vertx/[java Vert.x prject from yo generator-jvm example]
