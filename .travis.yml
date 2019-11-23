@@ -21,7 +21,6 @@ addons:
   apt:
     update: true
     packages:
-      - jq
       - wget
       - curl
       - sudo
@@ -53,33 +52,33 @@ jobs:
       name: vertx-hazelcast gradle
       script:
         - cd $root/vertx-hazelcast
-        - bash gradlew clean installDist >/dev/null
+        - bash gradlew clean installDist
         - bash ./build/install/vertx-hazelcast/bin/vertx-hazelcast &
         - PORT=8081 bash ./build/install/vertx-hazelcast/bin/vertx-hazelcast &
         - wait_for 8080 8081
-        - http :8080 message=ololo >/dev/null
-        - http :8080 message=trololo >/dev/null
-        - http :8081 message=ololo >/dev/null
-        - http :8081 message=trololo >/dev/null
+        - http :8080 message=ololo
+        - http :8080 message=trololo
+        - http :8081 message=ololo
+        - http :8081 message=trololo
         - stop_any 8080 8081
     - stage: test
       name: vertx-hazelcast maven
       script:
         - cd $root/vertx-hazelcast
-        - bash mvnw clean package >/dev/null
+        - bash mvnw clean package
         - java -jar target/*-all.jar &
         - PORT=8081 java -jar target/*-all.jar &
         - wait_for 8080 8081
-        - http :8080 message=ololo8080 >/dev/null
-        - http :8080 message=trololo8080 >/dev/null
-        - http :8081 message=ololo8081 >/dev/null
-        - http :8081 message=trololo8081 >/dev/null
+        - http :8080 message=ololo8080
+        - http :8080 message=trololo8080
+        - http :8081 message=ololo8081
+        - http :8081 message=trololo8081
         - stop_any 8080 8081
     - stage: test
       name: kotlin-vertx maven
       script:
         - cd $root/kotlin-vertx
-        - ./mvnw >/dev/null
+        - ./mvnw
         - java -jar target/*-all.jar &
         - wait_for 8080
         - http :8080/type/he/anything/you/want
@@ -88,7 +87,7 @@ jobs:
       name: kotlin-vertx gradle
       script:
         - cd $root/kotlin-vertx
-        - ./gradlew >/dev/null
+        - ./gradlew
         - java -jar build/libs/*-all.jar &
         - wait_for 8080
         - http :8080/type/he/anything/you/want
@@ -122,17 +121,12 @@ jobs:
         - stop_any 8080
         - ./gradlew
     - stage: test
-      name: generator-jvm-java-vertx gradle
-      script:
-        - cd $root/generator-jvm-java-vertx
-        # getting-started-jvm-vertx
-        - cd $root/getting-started-jvm-vertx
-        - ./gradlew clean build
+      name: getting-started-jvm-vertx gradle
+      script: cd $root/getting-started-jvm-vertx && ./gradlew clean build
     - stage: test
       name: reactive-microservices-jvm-vertx gradle
       script:
-        - cd $root/reactive-microservices-jvm-vertx
-        - ./gradlew clean build
+        - cd $root/reactive-microservices-jvm-vertx && ./gradlew clean build
     - stage: deploy
       name: build adoc with maven and deploy
       script:
