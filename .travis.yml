@@ -1,99 +1,120 @@
-service:
-- docker
-
+env:
+  global:
+    - TERM=dumb
+notifications:
+  email: false
+git:
+  quiet: true
+  depth: false
 language: java
-jdk: oraclejdk8
-
+jdk: openjdk11
+node_js: lts/*
+python: 3.7
+service:
+  - docker
+os: linux
 addons:
   apt:
     update: true
     packages:
-    - docker-ce
-    - python-pip
-    - curl
-    - bash
-    - jq
-
+      - jq
+      - wget
+      - curl
+      - sudo
+      - lsof
+      - unzip
+      - docker-ce
+      - python3-pip
+      - libxml2-utils
 install: true
 before_install:
-- sudo pip install docker-compose httpie
-- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
-- stop_any 5432 80
+  - export DISPLAY=:99.0
+  - |
+    if [ ! -f ${HOME}/.local/daggerok/bash-functions/master/main.bash ] ; then
+      mkdir -p ${HOME}/.local/daggerok/bash-functions/master ;
+      curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash > ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
+    fi
+    source ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
+  - stop_any 80 8001 8002 8080 5432
+  #
+  - export PATH=$HOME/.local/bin:$PATH
+  - pip3 install --user --upgrade pip setuptools
+  - pip install --user --upgrade docker-compose httpie
 
 script:
-- export root=$(pwd)
+  - export root=$(pwd)
 
-# vertx-hazelcast
-- cd $root/vertx-hazelcast
-#
-- bash gradlew clean installDist >/dev/null
-- bash ./build/install/vertx-hazelcast/bin/vertx-hazelcast &
-- PORT=8081 bash ./build/install/vertx-hazelcast/bin/vertx-hazelcast &
-- wait_for 8080 8081
-- http :8080 message=ololo >/dev/null
-- http :8080 message=trololo >/dev/null
-- http :8081 message=ololo >/dev/null
-- http :8081 message=trololo >/dev/null
-- stop_any 8080 8081
-#
-- bash mvnw clean package >/dev/null
-- java -jar target/*-all.jar &
-- PORT=8081 java -jar target/*-all.jar &
-- wait_for 8080 8081
-- http :8080 message=ololo8080 >/dev/null
-- http :8080 message=trololo8080 >/dev/null
-- http :8081 message=ololo8081 >/dev/null
-- http :8081 message=trololo8081 >/dev/null
-- stop_any 8080 8081
+  # vertx-hazelcast
+  - cd $root/vertx-hazelcast
+  #
+  - bash gradlew clean installDist >/dev/null
+  - bash ./build/install/vertx-hazelcast/bin/vertx-hazelcast &
+  - PORT=8081 bash ./build/install/vertx-hazelcast/bin/vertx-hazelcast &
+  - wait_for 8080 8081
+  - http :8080 message=ololo >/dev/null
+  - http :8080 message=trololo >/dev/null
+  - http :8081 message=ololo >/dev/null
+  - http :8081 message=trololo >/dev/null
+  - stop_any 8080 8081
+  #
+  - bash mvnw clean package >/dev/null
+  - java -jar target/*-all.jar &
+  - PORT=8081 java -jar target/*-all.jar &
+  - wait_for 8080 8081
+  - http :8080 message=ololo8080 >/dev/null
+  - http :8080 message=trololo8080 >/dev/null
+  - http :8081 message=ololo8081 >/dev/null
+  - http :8081 message=trololo8081 >/dev/null
+  - stop_any 8080 8081
 
-# java-vertx
-- cd $root/kotlin-vertx
-- ./mvnw >/dev/null
-- java -jar target/*-all.jar &
-- wait_for 8080
-- http :8080/type/he/anything/you/want
-- stop_any 8080
-#
-- ./gradlew >/dev/null
-- java -jar build/libs/*-all.jar &
-- wait_for 8080
-- http :8080/type/he/anything/you/want
-- stop_any 8080
+  # java-vertx
+  - cd $root/kotlin-vertx
+  - ./mvnw >/dev/null
+  - java -jar target/*-all.jar &
+  - wait_for 8080
+  - http :8080/type/he/anything/you/want
+  - stop_any 8080
+  #
+  - ./gradlew >/dev/null
+  - java -jar build/libs/*-all.jar &
+  - wait_for 8080
+  - http :8080/type/he/anything/you/want
+  - stop_any 8080
 
-# java-vertx
-- cd $root/java-vertx
-- ./mvnw
-- java -jar target/*-all.jar &
-- wait_for 8080
-- http :8080/type/he/anything/you/want
-- stop_any 8080
-#
-- ./gradlew
-- java -jar build/libs/*-all.jar &
-- wait_for 8080
-- http :8080/type/he/anything/you/want
-- stop_any 8080
+  # java-vertx
+  - cd $root/java-vertx
+  - ./mvnw
+  - java -jar target/*-all.jar &
+  - wait_for 8080
+  - http :8080/type/he/anything/you/want
+  - stop_any 8080
+  #
+  - ./gradlew
+  - java -jar build/libs/*-all.jar &
+  - wait_for 8080
+  - http :8080/type/he/anything/you/want
+  - stop_any 8080
 
-# generator-jvm-java-vertx
-- cd $root/generator-jvm-java-vertx
-- ./mvnw
-- java -jar target/*-all.jar &
-- wait_for 8080
-- http :8080/type/he/anything/you/want
-- stop_any 8080
-- ./gradlew
+  # generator-jvm-java-vertx
+  - cd $root/generator-jvm-java-vertx
+  - ./mvnw
+  - java -jar target/*-all.jar &
+  - wait_for 8080
+  - http :8080/type/he/anything/you/want
+  - stop_any 8080
+  - ./gradlew
 
-# getting-started-jvm-vertx
-- cd $root/getting-started-jvm-vertx
-- ./gradlew clean build
+  # getting-started-jvm-vertx
+  - cd $root/getting-started-jvm-vertx
+  - ./gradlew clean build
 
-# reactive-microservices-jvm-vertx
-- cd $root/reactive-microservices-jvm-vertx
-- ./gradlew clean build
+  # reactive-microservices-jvm-vertx
+  - cd $root/reactive-microservices-jvm-vertx
+  - ./gradlew clean build
 
 before_deploy:
-- cd $root/
-- ./mvnw
+  - cd $root/
+  - ./mvnw
 
 env:
   global:
@@ -111,12 +132,14 @@ deploy:
   target_branch: gh-pages
 
 before_cache:
-- sudo rm -rf $HOME/.gradle/caches/*/fileHashes/fileHashes.bin
-- sudo rm -rf $HOME/.gradle/caches/*/fileHashes/fileHashes.lock
-- sudo rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
+  - find ~/.gradle -name "fileHashes.bin" -print0 | xargs -0 rm -rfv '{}'
+  - for item in $(find ~/.gradle -name "*.lock") ; do rm -rfv $item ; done
 
 cache:
+  pip: true
+  packages: true
   directories:
-  - $HOME/.docker/
-  - $HOME/.gradle/
-  - $HOME/.m2/
+    - ~/.m2
+    - ~/.gradle
+    - ~/.docker
+    - ~/.local/daggerok
