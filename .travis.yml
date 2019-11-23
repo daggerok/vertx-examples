@@ -1,17 +1,21 @@
 env:
   global:
     - TERM=dumb
+
 notifications:
   email: false
 git:
   quiet: true
   depth: false
+
 language: java
-jdk: openjdk11
+jdk: openjdk8
 node_js: lts/*
 python: 3.7
+
 service:
   - docker
+
 os: linux
 addons:
   apt:
@@ -26,6 +30,7 @@ addons:
       - docker-ce
       - python3-pip
       - libxml2-utils
+
 install: true
 before_install:
   - export DISPLAY=:99.0
