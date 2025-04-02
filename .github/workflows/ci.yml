@@ -1,0 +1,33 @@
+name: ci
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      trigger:
+        description: Type m to trigger manual jobs
+        required: false
+        default: ''
+env:
+  JAVA_GRAALVM_VERSION: '23'
+  JAVA_GRAALVM_DISTRIBUTION: 'graalvm'
+jobs:
+  test-vertx-futures:
+    if: github.event.inputs.trigger == ''
+      || !startsWith(github.event.inputs.trigger, 'm')
+      || !startsWith(github.event.inputs.trigger, 'M')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        id: java-cache
+        with:
+          path: |
+            ~/.m2/repository
+            !~/.m2/repository/io/github/daggerok
+          key: ${{ runner.os }}-${{ hashFiles('**/pom.xml', '**/.mvn/**', '**/mvnw*') }}
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: ${{ env.JAVA_GRAALVM_VERSION }}
+          distribution: ${{ env.JAVA_GRAALVM_DISTRIBUTION }}
+      - run: cd $GITHUB_WORKSPACE/vertx-futures ; ./mvnw clean ; ./mvnw
+      - run: cd $GITHUB_WORKSPACE/vertx-futures ; java -jar target/*.jar
