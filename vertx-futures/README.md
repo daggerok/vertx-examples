@@ -49,3 +49,6 @@ function use() {
 	return 0
 }
 ```
+
+## RTFM
+- https://medium.com/@aribooluwatoba/avoiding-nested-callback-hell-in-reactive-operations-using-vert-x-7af7ac99754e
